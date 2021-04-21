@@ -142,10 +142,10 @@ export default {
 
   watch: {
     dialog(val) {
-      val || this.close();
+      return val || this.close();
     },
     dialogDelete(val) {
-      val || this.closeDelete();
+      return val || this.closeDelete();
     },
   },
 
@@ -276,13 +276,13 @@ export default {
 
     editItem(item) {
       this.editedIndex = this.users.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem = {...item};
       this.dialog = true;
     },
 
     deleteItem(item) {
       this.editedIndex = this.users.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem = {...item};
       this.dialogDelete = true;
     },
 
@@ -294,7 +294,7 @@ export default {
     close() {
       this.dialog = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedItem = {...this.defaultItem};
         this.editedIndex = -1;
       });
     },
@@ -302,7 +302,7 @@ export default {
     closeDelete() {
       this.dialogDelete = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedItem = {...this.defaultItem};
         this.editedIndex = -1;
       });
     },
