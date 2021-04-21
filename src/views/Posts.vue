@@ -31,9 +31,13 @@
           <v-row class="pa-2">
             <v-col cols="12">
               <v-card :color="changeColor(post.id)">
-                <v-card-title class="text-h5">{{ post.title }}</v-card-title>
+                <v-card-title class="text-h5">
+                  {{ post.title | capitalize }}
+                </v-card-title>
 
-                <v-card-subtitle>{{ post.body }}</v-card-subtitle>
+                <v-card-subtitle>
+                  {{ post.body | capitalize }}
+                </v-card-subtitle>
 
                 <v-card-actions>
                   <v-btn text @click="editItem(post)"> Edit </v-btn>
