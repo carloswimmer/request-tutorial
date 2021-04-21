@@ -1,9 +1,7 @@
 <template>
   <v-container>
     <v-row class="pa-4" justify="center" align-content="center" v-if="loading">
-      <p class="headline">
-        Carregando...
-      </p>
+      <p class="headline">Carregando...</p>
     </v-row>
     <v-row class="pa-4" justify="center" align-content="center" v-else>
       <v-img
@@ -15,7 +13,7 @@
       />
       <div class="text-no-result">
         <p class="headline text-left">
-          Não encontramos resultados para essa busca.
+          There is no result for this kind of search.
         </p>
       </div>
     </v-row>
@@ -34,7 +32,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .text-no-result {
   display: flex;
@@ -42,7 +39,7 @@ export default {
   margin-left: 32px;
   max-width: 320px;
   min-height: 150px;
-  color: #003633;
+  opacity: 0.5;
+  color: #2196f3;
 }
 </style>
-

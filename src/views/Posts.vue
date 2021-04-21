@@ -27,7 +27,10 @@
             New Item
           </v-btn>
         </v-card-title>
-        <div v-for="post in posts" :key="post.id">
+        <div v-if="!posts.length">
+          <no-results></no-results>
+        </div>
+        <div v-for="post in posts" :key="post.id" v-else>
           <v-row class="pa-2">
             <v-col cols="12">
               <v-card :color="changeColor(post.id)">
@@ -108,9 +111,12 @@
 <script>
 import fakeUsers from '../../support/sample-data/Users.json';
 import fakePosts from '../../support/sample-data/Posts.json';
+import NoResults from '@/components/NoResults';
 
 export default {
   name: 'Posts',
+
+  components: { NoResults },
 
   data: () => ({
     dialog: false,
