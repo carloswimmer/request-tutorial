@@ -1,6 +1,7 @@
 <template>
   <v-card class="mx-auto mt-8" max-width="800">
     <v-container>
+      <v-card-title class="text-h5">Posts</v-card-title>
       <div v-for="post in posts" :key="post.id">
         <v-row class="pa-2">
           <v-col cols="12">
@@ -10,14 +11,81 @@
               <v-card-subtitle>{{ post.body }}</v-card-subtitle>
 
               <v-card-actions>
-                <v-btn text> Delete </v-btn>
-                <v-btn text> Edit </v-btn>
+                <v-btn text @click="editItem(post)"> Edit </v-btn>
+                <v-btn text @click="deleteItem(post)"> Delete </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
       </div>
     </v-container>
+
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">{{ formTitle }}</span>
+        </v-card-title>
+
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.name"
+                  label="Dessert name"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.username"
+                  label="username"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.email"
+                  label="email (g)"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.carbs"
+                  label="Carbs (g)"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.protein"
+                  label="Protein (g)"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
+          <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="dialogDelete" max-width="500px">
+      <v-card>
+        <v-card-title class="headline"
+          >Are you sure you want to delete this item?</v-card-title
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+          <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+            >OK</v-btn
+          >
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -126,6 +194,7 @@ export default {
     },
 
     deleteItem(item) {
+      console.log('post', item);
       this.editedIndex = this.posts.indexOf(item);
       this.editedItem = { ...item };
       this.dialogDelete = true;
