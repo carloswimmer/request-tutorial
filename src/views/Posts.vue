@@ -20,7 +20,13 @@
     </v-card>
     <v-card class="mx-auto mt-8" max-width="800">
       <v-container>
-        <v-card-title class="text-h5">Posts</v-card-title>
+        <v-card-title class="text-h5">
+          Posts
+          <v-spacer></v-spacer>
+          <v-btn color="primary" dark class="mb-2" @click="editItem()">
+            New Item
+          </v-btn>
+        </v-card-title>
         <div v-for="post in posts" :key="post.id">
           <v-row class="pa-2">
             <v-col cols="12">
@@ -48,35 +54,19 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12">
                   <v-text-field
-                    v-model="editedItem.name"
-                    label="Dessert name"
+                    filled
+                    v-model="editedItem.title"
+                    label="Title"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.username"
-                    label="username"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.email"
-                    label="email (g)"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.carbs"
-                    label="Carbs (g)"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.protein"
-                    label="Protein (g)"
-                  ></v-text-field>
+                <v-col cols="12">
+                  <v-textarea
+                    filled
+                    v-model="editedItem.body"
+                    label="Body"
+                  ></v-textarea>
                 </v-col>
               </v-row>
             </v-container>
@@ -112,6 +102,9 @@
 </template>
 
 <script>
+import fakeUsers from '../../support/sample-data/Users.json';
+import fakePosts from '../../support/sample-data/Posts.json';
+
 export default {
   name: 'Posts',
 
@@ -134,18 +127,14 @@ export default {
     posts: [],
     editedIndex: -1,
     editedItem: {
-      name: '',
-      username: 0,
-      email: 0,
-      carbs: 0,
-      protein: 0,
+      title: '',
+      body: '',
+      userId: '',
     },
     defaultItem: {
-      name: '',
-      username: 0,
-      email: 0,
-      carbs: 0,
-      protein: 0,
+      title: '',
+      body: '',
+      userId: '',
     },
   }),
 
@@ -166,7 +155,7 @@ export default {
       return val || this.closeDelete();
     },
     userIdValue(changed) {
-      console.log('user id', changed);
+      this.posts = fakePosts.filter(post => post.userId === changed);
     },
   },
 
@@ -176,154 +165,7 @@ export default {
 
   methods: {
     initialize() {
-      this.posts = [
-        {
-          userId: 1,
-          id: 1,
-          title:
-            'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
-          body:
-            'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto',
-        },
-        {
-          userId: 1,
-          id: 2,
-          title: 'qui est esse',
-          body:
-            'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla',
-        },
-        {
-          userId: 1,
-          id: 3,
-          title: 'ea molestias quasi exercitationem repellat qui ipsa sit aut',
-          body:
-            'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut',
-        },
-        {
-          userId: 1,
-          id: 4,
-          title: 'eum et est occaecati',
-          body:
-            'ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit',
-        },
-      ];
-      this.users = [
-        {
-          id: 1,
-          name: 'Leanne Graham',
-          username: 'Bret',
-          email: 'Sincere@april.biz',
-          address: {
-            street: 'Kulas Light',
-            suite: 'Apt. 556',
-            city: 'Gwenborough',
-            zipcode: '92998-3874',
-            geo: {
-              lat: '-37.3159',
-              lng: '81.1496',
-            },
-          },
-          phone: '1-770-736-8031 x56442',
-          website: 'hildegard.org',
-          company: {
-            name: 'Romaguera-Crona',
-            catchPhrase: 'Multi-layered client-server neural-net',
-            bs: 'harness real-time e-markets',
-          },
-        },
-        {
-          id: 2,
-          name: 'Ervin Howell',
-          username: 'Antonette',
-          email: 'Shanna@melissa.tv',
-          address: {
-            street: 'Victor Plains',
-            suite: 'Suite 879',
-            city: 'Wisokyburgh',
-            zipcode: '90566-7771',
-            geo: {
-              lat: '-43.9509',
-              lng: '-34.4618',
-            },
-          },
-          phone: '010-692-6593 x09125',
-          website: 'anastasia.net',
-          company: {
-            name: 'Deckow-Crist',
-            catchPhrase: 'Proactive didactic contingency',
-            bs: 'synergize scalable supply-chains',
-          },
-        },
-        {
-          id: 3,
-          name: 'Clementine Bauch',
-          username: 'Samantha',
-          email: 'Nathan@yesenia.net',
-          address: {
-            street: 'Douglas Extension',
-            suite: 'Suite 847',
-            city: 'McKenziehaven',
-            zipcode: '59590-4157',
-            geo: {
-              lat: '-68.6102',
-              lng: '-47.0653',
-            },
-          },
-          phone: '1-463-123-4447',
-          website: 'ramiro.info',
-          company: {
-            name: 'Romaguera-Jacobson',
-            catchPhrase: 'Face to face bifurcated interface',
-            bs: 'e-enable strategic applications',
-          },
-        },
-        {
-          id: 4,
-          name: 'Patricia Lebsack',
-          username: 'Karianne',
-          email: 'Julianne.OConner@kory.org',
-          address: {
-            street: 'Hoeger Mall',
-            suite: 'Apt. 692',
-            city: 'South Elvis',
-            zipcode: '53919-4257',
-            geo: {
-              lat: '29.4572',
-              lng: '-164.2990',
-            },
-          },
-          phone: '493-170-9623 x156',
-          website: 'kale.biz',
-          company: {
-            name: 'Robel-Corkery',
-            catchPhrase: 'Multi-tiered zero tolerance productivity',
-            bs: 'transition cutting-edge web services',
-          },
-        },
-        {
-          id: 5,
-          name: 'Chelsey Dietrich',
-          username: 'Kamren',
-          email: 'Lucio_Hettinger@annie.ca',
-          address: {
-            street: 'Skiles Walks',
-            suite: 'Suite 351',
-            city: 'Roscoeview',
-            zipcode: '33263',
-            geo: {
-              lat: '-31.8129',
-              lng: '62.5342',
-            },
-          },
-          phone: '(254)954-1289',
-          website: 'demarco.info',
-          company: {
-            name: 'Keebler LLC',
-            catchPhrase: 'User-centric fault-tolerant solution',
-            bs: 'revolutionize end-to-end systems',
-          },
-        },
-      ];
+      this.users = fakeUsers;
     },
 
     changeColor(id) {
@@ -336,7 +178,7 @@ export default {
 
     editItem(item) {
       this.editedIndex = this.posts.indexOf(item);
-      this.editedItem = { ...item };
+      this.editedItem = { ...item, userId: this.userId };
       this.dialog = true;
     },
 
