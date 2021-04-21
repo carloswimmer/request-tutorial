@@ -1,92 +1,114 @@
 <template>
-  <v-card class="mx-auto mt-8" max-width="800">
-    <v-container>
-      <v-card-title class="text-h5">Posts</v-card-title>
-      <div v-for="post in posts" :key="post.id">
-        <v-row class="pa-2">
+  <div>
+    <v-card class="mx-auto my-8" max-width="800">
+      <v-container>
+        <v-card-title class="text-h5">User</v-card-title>
+        <v-row class="pa-2" justify="center" align="center">
           <v-col cols="12">
-            <v-card :color="changeColor(post.id)">
-              <v-card-title class="text-h5">{{ post.title }}</v-card-title>
-
-              <v-card-subtitle>{{ post.body }}</v-card-subtitle>
-
-              <v-card-actions>
-                <v-btn text @click="editItem(post)"> Edit </v-btn>
-                <v-btn text @click="deleteItem(post)"> Delete </v-btn>
-              </v-card-actions>
-            </v-card>
+            <v-autocomplete
+              v-model="userId"
+              :items="users"
+              dense
+              filled
+              label="Name"
+              item-text="name"
+              item-value="id"
+            ></v-autocomplete>
           </v-col>
         </v-row>
-      </div>
-    </v-container>
+      </v-container>
+    </v-card>
+    <v-card class="mx-auto mt-8" max-width="800">
+      <v-container>
+        <v-card-title class="text-h5">Posts</v-card-title>
+        <div v-for="post in posts" :key="post.id">
+          <v-row class="pa-2">
+            <v-col cols="12">
+              <v-card :color="changeColor(post.id)">
+                <v-card-title class="text-h5">{{ post.title }}</v-card-title>
 
-    <v-dialog v-model="dialog" max-width="500px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">{{ formTitle }}</span>
-        </v-card-title>
+                <v-card-subtitle>{{ post.body }}</v-card-subtitle>
 
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="editedItem.name"
-                  label="Dessert name"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="editedItem.username"
-                  label="username"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="editedItem.email"
-                  label="email (g)"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="editedItem.carbs"
-                  label="Carbs (g)"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="editedItem.protein"
-                  label="Protein (g)"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
+                <v-card-actions>
+                  <v-btn text @click="editItem(post)"> Edit </v-btn>
+                  <v-btn text @click="deleteItem(post)"> Delete </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </div>
+      </v-container>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-          <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      <v-dialog v-model="dialog" max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">{{ formTitle }}</span>
+          </v-card-title>
 
-    <v-dialog v-model="dialogDelete" max-width="500px">
-      <v-card>
-        <v-card-title class="headline"
-          >Are you sure you want to delete this item?</v-card-title
-        >
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-          <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-            >OK</v-btn
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.name"
+                    label="Dessert name"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.username"
+                    label="username"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.email"
+                    label="email (g)"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.carbs"
+                    label="Carbs (g)"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.protein"
+                    label="Protein (g)"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
+            <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="dialogDelete" max-width="500px">
+        <v-card>
+          <v-card-title class="headline"
+            >Are you sure you want to delete this item?</v-card-title
           >
-          <v-spacer></v-spacer>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-card>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="closeDelete"
+              >Cancel</v-btn
+            >
+            <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+              >OK</v-btn
+            >
+            <v-spacer></v-spacer>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -107,6 +129,8 @@ export default {
       { text: 'email', value: 'email' },
       { text: 'Actions', align: 'end', value: 'actions', sortable: false },
     ],
+    users: [],
+    userId: null,
     posts: [],
     editedIndex: -1,
     editedItem: {
@@ -129,6 +153,9 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
     },
+    userIdValue() {
+      return this.userId;
+    },
   },
 
   watch: {
@@ -137,6 +164,9 @@ export default {
     },
     dialogDelete(val) {
       return val || this.closeDelete();
+    },
+    userIdValue(changed) {
+      console.log('user id', changed);
     },
   },
 
@@ -175,6 +205,123 @@ export default {
           title: 'eum et est occaecati',
           body:
             'ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit',
+        },
+      ];
+      this.users = [
+        {
+          id: 1,
+          name: 'Leanne Graham',
+          username: 'Bret',
+          email: 'Sincere@april.biz',
+          address: {
+            street: 'Kulas Light',
+            suite: 'Apt. 556',
+            city: 'Gwenborough',
+            zipcode: '92998-3874',
+            geo: {
+              lat: '-37.3159',
+              lng: '81.1496',
+            },
+          },
+          phone: '1-770-736-8031 x56442',
+          website: 'hildegard.org',
+          company: {
+            name: 'Romaguera-Crona',
+            catchPhrase: 'Multi-layered client-server neural-net',
+            bs: 'harness real-time e-markets',
+          },
+        },
+        {
+          id: 2,
+          name: 'Ervin Howell',
+          username: 'Antonette',
+          email: 'Shanna@melissa.tv',
+          address: {
+            street: 'Victor Plains',
+            suite: 'Suite 879',
+            city: 'Wisokyburgh',
+            zipcode: '90566-7771',
+            geo: {
+              lat: '-43.9509',
+              lng: '-34.4618',
+            },
+          },
+          phone: '010-692-6593 x09125',
+          website: 'anastasia.net',
+          company: {
+            name: 'Deckow-Crist',
+            catchPhrase: 'Proactive didactic contingency',
+            bs: 'synergize scalable supply-chains',
+          },
+        },
+        {
+          id: 3,
+          name: 'Clementine Bauch',
+          username: 'Samantha',
+          email: 'Nathan@yesenia.net',
+          address: {
+            street: 'Douglas Extension',
+            suite: 'Suite 847',
+            city: 'McKenziehaven',
+            zipcode: '59590-4157',
+            geo: {
+              lat: '-68.6102',
+              lng: '-47.0653',
+            },
+          },
+          phone: '1-463-123-4447',
+          website: 'ramiro.info',
+          company: {
+            name: 'Romaguera-Jacobson',
+            catchPhrase: 'Face to face bifurcated interface',
+            bs: 'e-enable strategic applications',
+          },
+        },
+        {
+          id: 4,
+          name: 'Patricia Lebsack',
+          username: 'Karianne',
+          email: 'Julianne.OConner@kory.org',
+          address: {
+            street: 'Hoeger Mall',
+            suite: 'Apt. 692',
+            city: 'South Elvis',
+            zipcode: '53919-4257',
+            geo: {
+              lat: '29.4572',
+              lng: '-164.2990',
+            },
+          },
+          phone: '493-170-9623 x156',
+          website: 'kale.biz',
+          company: {
+            name: 'Robel-Corkery',
+            catchPhrase: 'Multi-tiered zero tolerance productivity',
+            bs: 'transition cutting-edge web services',
+          },
+        },
+        {
+          id: 5,
+          name: 'Chelsey Dietrich',
+          username: 'Kamren',
+          email: 'Lucio_Hettinger@annie.ca',
+          address: {
+            street: 'Skiles Walks',
+            suite: 'Suite 351',
+            city: 'Roscoeview',
+            zipcode: '33263',
+            geo: {
+              lat: '-31.8129',
+              lng: '62.5342',
+            },
+          },
+          phone: '(254)954-1289',
+          website: 'demarco.info',
+          company: {
+            name: 'Keebler LLC',
+            catchPhrase: 'User-centric fault-tolerant solution',
+            bs: 'revolutionize end-to-end systems',
+          },
         },
       ];
     },
