@@ -181,6 +181,12 @@ export default {
     },
 
     editItem(item) {
+      if (!this.userId) {
+        this.$store.dispatch('toggleToastAlert', {
+          message: 'Choose an user before',
+        });
+        return;
+      }
       this.editedIndex = this.posts.indexOf(item);
       this.editedItem = { ...item, userId: this.userId };
       this.dialog = true;
