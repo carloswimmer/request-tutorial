@@ -12,16 +12,14 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn to="/" icon>
-        <v-icon>mdi-account-multiple</v-icon>
+      <v-btn to="/" text class="mr-4">
+        <v-icon left>mdi-account-multiple</v-icon>
+        Users
       </v-btn>
 
-      <v-btn to="posts" icon>
-        <v-icon>mdi-note-text-outline</v-icon>
-      </v-btn>
-
-      <v-btn to="albums" icon>
-        <v-icon>mdi-image-album</v-icon>
+      <v-btn to="posts" text>
+        <v-icon left>mdi-note-text-outline</v-icon>
+        Posts
       </v-btn>
     </v-app-bar>
   </nav>
