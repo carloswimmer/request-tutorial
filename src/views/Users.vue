@@ -86,7 +86,7 @@
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
       </template>
       <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset </v-btn>
+        <no-results></no-results>
       </template>
     </v-data-table>
   </v-card>
@@ -94,9 +94,12 @@
 
 <script>
 import fakeUsers from '../../support/sample-data/Users.json';
+import NoResults from '@/components/NoResults';
 
 export default {
   name: 'Users',
+
+  components: { NoResults },
 
   data: () => ({
     dialog: false,
@@ -154,6 +157,10 @@ export default {
       this.users = fakeUsers;
     },
 
+    listUsers() {
+      // TODO
+    },
+
     editItem(item) {
       this.editedIndex = this.users.indexOf(item);
       this.editedItem = { ...item };
@@ -167,8 +174,14 @@ export default {
     },
 
     deleteItemConfirm() {
+      this.deleteUser(this.editedItem);
       this.users.splice(this.editedIndex, 1);
       this.closeDelete();
+    },
+
+    deleteUser(user) {
+      console.log(user);
+      // TODO
     },
 
     close() {
@@ -189,11 +202,23 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
+        this.updateUser(this.editedItem);
         Object.assign(this.users[this.editedIndex], this.editedItem);
       } else {
+        this.saveUser(this.editedItem);
         this.users.push(this.editedItem);
       }
       this.close();
+    },
+
+    saveUser(user) {
+      console.log(user);
+      // TODO
+    },
+
+    updateUser(user) {
+      console.log(user);
+      // TODO
     },
   },
 };

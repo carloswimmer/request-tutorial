@@ -178,6 +178,14 @@ export default {
       this.users = fakeUsers;
     },
 
+    listUsers() {
+      // TODO
+    },
+
+    listPostsById() {
+      // TODO
+    },
+
     changeColor(id) {
       if (id % 3 === 0) return '#AD1457AA';
       if (id % 2 === 0) return '#00695CAA';
@@ -210,6 +218,11 @@ export default {
       this.closeDelete();
     },
 
+    deletePost(post) {
+      console.log(post);
+      // TODO
+    },
+
     close() {
       this.dialog = false;
       this.$nextTick(() => {
@@ -233,6 +246,16 @@ export default {
         this.posts.push(this.editedItem);
       }
       this.close();
+    },
+
+    savePost(post) {
+      console.log(post);
+      // TODO
+    },
+
+    updatePost(post) {
+      console.log(post);
+      // TODO
     },
   },
 };
