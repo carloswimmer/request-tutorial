@@ -1,106 +1,29 @@
 <template>
   <v-card class="mx-auto mt-8" max-width="800">
-    <v-data-table
-      :headers="headers"
-      :items="users"
-      sort-by="name"
-      class="elevation-1"
-    >
-      <template v-slot:top>
-        <v-toolbar flat>
-          <v-toolbar-title>Posts</v-toolbar-title>
-          <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                New Item
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
+    <v-container>
+      <div v-for="post in posts" :key="post.id">
+        <v-row class="pa-2">
+          <v-col cols="12">
+            <v-card color="#1565C0AA">
+              <v-card-title class="text-h5">{{ post.title }}</v-card-title>
 
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.name"
-                        label="Dessert name"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.username"
-                        label="username"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.email"
-                        label="email (g)"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.carbs"
-                        label="Carbs (g)"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.protein"
-                        label="Protein (g)"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
+              <v-card-subtitle>{{ post.body }}</v-card-subtitle>
 
               <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close">
-                  Cancel
-                </v-btn>
-                <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+                <v-btn text> Delete </v-btn>
+                <v-btn text> Edit </v-btn>
               </v-card-actions>
             </v-card>
-          </v-dialog>
-          <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-              <v-card-title class="headline"
-                >Are you sure you want to delete this item?</v-card-title
-              >
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete"
-                  >Cancel</v-btn
-                >
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                  >OK</v-btn
-                >
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-toolbar>
-      </template>
-      <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset </v-btn>
-      </template>
-    </v-data-table>
+          </v-col>
+        </v-row>
+      </div>
+    </v-container>
   </v-card>
 </template>
 
 <script>
 export default {
-  name: "Users",
+  name: "Posts",
 
   data: () => ({
     dialog: false,
@@ -116,7 +39,7 @@ export default {
       { text: "email", value: "email" },
       { text: "Actions", align: "end", value: "actions", sortable: false },
     ],
-    users: [],
+    posts: [],
     editedIndex: -1,
     editedItem: {
       name: "",
@@ -155,23 +78,53 @@ export default {
 
   methods: {
     initialize() {
-      this.users = [];
+      this.posts = [
+        {
+          userId: 1,
+          id: 1,
+          title:
+            "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+          body:
+            "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+        },
+        {
+          userId: 1,
+          id: 2,
+          title: "qui est esse",
+          body:
+            "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
+        },
+        {
+          userId: 1,
+          id: 3,
+          title: "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+          body:
+            "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut",
+        },
+        {
+          userId: 1,
+          id: 4,
+          title: "eum et est occaecati",
+          body:
+            "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit",
+        },
+      ];
     },
 
     editItem(item) {
-      this.editedIndex = this.users.indexOf(item);
+      this.editedIndex = this.posts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      this.editedIndex = this.users.indexOf(item);
+      this.editedIndex = this.posts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.users.splice(this.editedIndex, 1);
+      this.posts.splice(this.editedIndex, 1);
       this.closeDelete();
     },
 
@@ -193,9 +146,9 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.users[this.editedIndex], this.editedItem);
+        Object.assign(this.posts[this.editedIndex], this.editedItem);
       } else {
-        this.users.push(this.editedItem);
+        this.posts.push(this.editedItem);
       }
       this.close();
     },
