@@ -1,10 +1,9 @@
 <template>
-  <v-app light>
+  <v-app>
     <navbar />
     <v-main>
       <router-view />
     </v-main>
-    <toast-alert />
   </v-app>
 </template>
 
@@ -15,5 +14,9 @@ export default {
   name: "App",
 
   components: { Navbar },
+
+  mounted() {
+    this.$vuetify.theme.dark = true;
+  },
 };
 </script>
