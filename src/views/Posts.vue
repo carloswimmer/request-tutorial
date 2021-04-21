@@ -4,7 +4,7 @@
       <div v-for="post in posts" :key="post.id">
         <v-row class="pa-2">
           <v-col cols="12">
-            <v-card color="#1565C0AA">
+            <v-card :color="changeColor(post.id)">
               <v-card-title class="text-h5">{{ post.title }}</v-card-title>
 
               <v-card-subtitle>{{ post.body }}</v-card-subtitle>
@@ -23,33 +23,33 @@
 
 <script>
 export default {
-  name: "Posts",
+  name: 'Posts',
 
   data: () => ({
     dialog: false,
     dialogDelete: false,
     headers: [
       {
-        text: "Name",
-        align: "start",
+        text: 'Name',
+        align: 'start',
         sortable: false,
-        value: "name",
+        value: 'name',
       },
-      { text: "Username", value: "username" },
-      { text: "email", value: "email" },
-      { text: "Actions", align: "end", value: "actions", sortable: false },
+      { text: 'Username', value: 'username' },
+      { text: 'email', value: 'email' },
+      { text: 'Actions', align: 'end', value: 'actions', sortable: false },
     ],
     posts: [],
     editedIndex: -1,
     editedItem: {
-      name: "",
+      name: '',
       username: 0,
       email: 0,
       carbs: 0,
       protein: 0,
     },
     defaultItem: {
-      name: "",
+      name: '',
       username: 0,
       email: 0,
       carbs: 0,
@@ -59,16 +59,16 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+      return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
     },
   },
 
   watch: {
     dialog(val) {
-      val || this.close();
+      return val || this.close();
     },
     dialogDelete(val) {
-      val || this.closeDelete();
+      return val || this.closeDelete();
     },
   },
 
@@ -83,43 +83,51 @@ export default {
           userId: 1,
           id: 1,
           title:
-            "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+            'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
           body:
-            "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+            'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto',
         },
         {
           userId: 1,
           id: 2,
-          title: "qui est esse",
+          title: 'qui est esse',
           body:
-            "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
+            'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla',
         },
         {
           userId: 1,
           id: 3,
-          title: "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+          title: 'ea molestias quasi exercitationem repellat qui ipsa sit aut',
           body:
-            "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut",
+            'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut',
         },
         {
           userId: 1,
           id: 4,
-          title: "eum et est occaecati",
+          title: 'eum et est occaecati',
           body:
-            "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit",
+            'ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit',
         },
       ];
     },
 
+    changeColor(id) {
+      if (id % 3 === 0) return '#AD1457AA';
+      if (id % 2 === 0) return '#00695CAA';
+      if (id % 1 === 0) return '#F57F17AA';
+
+      return '#1565c0AA';
+    },
+
     editItem(item) {
       this.editedIndex = this.posts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem = { ...item };
       this.dialog = true;
     },
 
     deleteItem(item) {
       this.editedIndex = this.posts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem = { ...item };
       this.dialogDelete = true;
     },
 
@@ -131,7 +139,7 @@ export default {
     close() {
       this.dialog = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedItem = { ...this.defaultItem };
         this.editedIndex = -1;
       });
     },
@@ -139,7 +147,7 @@ export default {
     closeDelete() {
       this.dialogDelete = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedItem = { ...this.defaultItem };
         this.editedIndex = -1;
       });
     },
