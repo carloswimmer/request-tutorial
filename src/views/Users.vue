@@ -19,34 +19,34 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6">
                       <v-text-field
                         v-model="editedItem.name"
-                        label="Dessert name"
+                        label="Name"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6">
                       <v-text-field
                         v-model="editedItem.username"
-                        label="username"
+                        label="Username"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6">
                       <v-text-field
                         v-model="editedItem.email"
-                        label="email (g)"
+                        label="Email"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6">
                       <v-text-field
-                        v-model="editedItem.carbs"
-                        label="Carbs (g)"
+                        v-model="editedItem.phone"
+                        label="Phone"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6">
                       <v-text-field
-                        v-model="editedItem.protein"
-                        label="Protein (g)"
+                        v-model="editedItem.website"
+                        label="Website"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -114,17 +114,17 @@ export default {
     editedIndex: -1,
     editedItem: {
       name: '',
-      username: 0,
-      email: 0,
-      carbs: 0,
-      protein: 0,
+      username: '',
+      email: '',
+      phone: '',
+      website: '',
     },
     defaultItem: {
       name: '',
-      username: 0,
-      email: 0,
-      carbs: 0,
-      protein: 0,
+      username: '',
+      email: '',
+      phone: '',
+      website: '',
     },
   }),
 
